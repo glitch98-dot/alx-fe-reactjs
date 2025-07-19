@@ -4,36 +4,39 @@ function MainContent() {
   return (
     <main style={{ 
       padding: '30px',
-      backgroundColor: '#ffffff',
-      minHeight: '500px',
-      borderRadius: '8px',
-      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
       margin: '20px auto',
-      maxWidth: '800px'
+      backgroundColor: '#ffffff',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+      maxWidth: '900px',
+      minHeight: '500px'
     }}>
       <h2 style={{ 
         color: '#2c3e50',
-        fontSize: '2.2rem',
+        fontSize: '2rem',
         marginBottom: '20px',
         textAlign: 'center',
-        borderBottom: '3px solid #3498db',
+        borderBottom: '2px solid #3498db',
         paddingBottom: '10px'
       }}>
         Welcome to My Travel Blog
       </h2>
-      
+
       <div style={{ 
         display: 'flex',
         flexWrap: 'wrap',
-        gap: '20px',
-        justifyContent: 'center'
+        justifyContent: 'space-between',
+        gap: '20px'
       }}>
-        <div style={{ 
-          backgroundColor: '#ecf0f1',
-          padding: '20px',
+        {/* Destination 1 */}
+        <div style={{
+          backgroundColor: '#f9f9f9',
+          border: '1px solid #ccc',
           borderRadius: '10px',
-          flex: '1 1 300px',
-          minWidth: '250px'
+          padding: '20px',
+          flex: '1 1 280px',
+          minWidth: '250px',
         }}>
           <h3 style={{ 
             color: '#e74c3c',
@@ -44,20 +47,22 @@ function MainContent() {
           </h3>
           <p style={{ 
             color: '#34495e',
-            lineHeight: '1.6',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            lineHeight: '1.6'
           }}>
             The City of Light captivates visitors with its romantic atmosphere, 
             world-class museums, and iconic landmarks like the Eiffel Tower.
           </p>
         </div>
-        
-        <div style={{ 
-          backgroundColor: '#ecf0f1',
-          padding: '20px',
+
+        {/* Destination 2 */}
+        <div style={{
+          backgroundColor: '#f9f9f9',
+          border: '1px solid #ccc',
           borderRadius: '10px',
-          flex: '1 1 300px',
-          minWidth: '250px'
+          padding: '20px',
+          flex: '1 1 280px',
+          minWidth: '250px',
         }}>
           <h3 style={{ 
             color: '#e74c3c',
@@ -68,20 +73,22 @@ function MainContent() {
           </h3>
           <p style={{ 
             color: '#34495e',
-            lineHeight: '1.6',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            lineHeight: '1.6'
           }}>
             A fascinating blend of traditional culture and cutting-edge technology, 
             Tokyo offers incredible cuisine and unique experiences.
           </p>
         </div>
-        
-        <div style={{ 
-          backgroundColor: '#ecf0f1',
-          padding: '20px',
+
+        {/* Destination 3 */}
+        <div style={{
+          backgroundColor: '#f9f9f9',
+          border: '1px solid #ccc',
           borderRadius: '10px',
-          flex: '1 1 300px',
-          minWidth: '250px'
+          padding: '20px',
+          flex: '1 1 280px',
+          minWidth: '250px',
         }}>
           <h3 style={{ 
             color: '#e74c3c',
@@ -92,8 +99,8 @@ function MainContent() {
           </h3>
           <p style={{ 
             color: '#34495e',
-            lineHeight: '1.6',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            lineHeight: '1.6'
           }}>
             The city that never sleeps, offering Broadway shows, world-class dining, 
             and the energy of one of the world's greatest metropolises.
