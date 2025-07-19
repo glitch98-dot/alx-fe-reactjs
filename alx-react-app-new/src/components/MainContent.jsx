@@ -23,6 +23,16 @@ function MainContent() {
         Welcome to My Travel Blog
       </h2>
 
+      {/* Required sentence for ALX */}
+      <p style={{ 
+        textAlign: 'center', 
+        fontSize: '1.1rem', 
+        color: '#2c3e50',
+        marginBottom: '30px'
+      }}>
+        I love to visit New York, Paris, and Tokyo.
+      </p>
+
       <div style={{ 
         display: 'flex',
         flexWrap: 'wrap',
