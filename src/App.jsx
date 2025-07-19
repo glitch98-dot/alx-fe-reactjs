@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import Counter from './components/Counter';
 
@@ -25,7 +24,6 @@ function App() {
   );
 }
 
-=======
 import Header from './components/Header';
 import MainContent from './components/MainContent';
 import Footer from './components/Footer';
@@ -41,5 +39,4 @@ function App() {
     </div>
   );
 }
->>>>>>> eca049cd9b1982261e074b3d95b0653909908f9a
 export default App;
