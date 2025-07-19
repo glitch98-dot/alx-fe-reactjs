@@ -40,7 +40,6 @@ function Counter() {
     </div>
   );
 }
-
 const buttonStyle = {
   margin: '0 5px',
   padding: '10px 15px',
