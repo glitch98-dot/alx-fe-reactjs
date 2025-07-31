@@ -35,7 +35,7 @@ const EditRecipeForm = ({ recipe }) => {
   return (
     <div>
       <h3>Edit Recipe</h3>
-      <div onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={title}
@@ -50,14 +50,14 @@ const EditRecipeForm = ({ recipe }) => {
           required
         />
         <div>
-          <button type="submit" onClick={handleSubmit}>
+          <button type="submit">
             Save Changes
           </button>
           <button type="button" onClick={handleCancel}>
             Cancel
           </button>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
