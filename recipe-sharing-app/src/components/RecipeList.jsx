@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import useRecipeStore from './recipeStore'
+import FavoriteButton from './FavoriteButton'
 
 const RecipeList = () => {
   const recipes = useRecipeStore(state => state.recipes)
@@ -26,13 +27,18 @@ const RecipeList = () => {
         </p>
       ) : (
         displayRecipes.map(recipe => (
-          <div key={recipe.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
-            <h3>
-              <Link to={`/recipe/${recipe.id}`}>
-                {recipe.title}
-              </Link>
-            </h3>
-            <p>{recipe.description}</p>
+          <div key={recipe.id} style={{ border: '1px solid #ccc', padding: '15px', margin: '10px 0', borderRadius: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div style={{ flex: 1 }}>
+                <h3>
+                  <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none', color: '#333' }}>
+                    {recipe.title}
+                  </Link>
+                </h3>
+                <p style={{ margin: '8px 0', color: '#666' }}>{recipe.description}</p>
+              </div>
+              <FavoriteButton recipeId={recipe.id} />
+            </div>
           </div>
         ))
       )}
