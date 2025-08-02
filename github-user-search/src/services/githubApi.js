@@ -1,17 +1,12 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://api.github.com/users';
+const BASE_URL = 'https://api.github.com';
 
-export async function fetchUserData(username, token = null) {
-  if (!username || !username.trim()) {
-    throw new Error('Username is required');
+export const fetchUserData = async (username) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/users/${username}`);
+    return response.data;
+  } catch (error) {
+    throw error;
   }
-
-  const headers = token ? { Authorization: `token ${token}` } : {};
-
-  const response = await axios.get(`${BASE_URL}/${encodeURIComponent(username)}`, {
-    headers,
-  });
-
-  return response.data;
-}
+};

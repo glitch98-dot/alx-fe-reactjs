@@ -1,33 +1,58 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { fetchUserData } from '../services/githubService';
 
-const SearchBar = ({ onSearch, disabled }) => {
-  const [input, setInput] = useState('');
+const Search = () => {
+  const [username, setUsername] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
-    onSearch(input.trim());
+    if (!username.trim()) return;
+
+    setLoading(true);
+    setError(false);
+    setUserData(null);
+
+    try {
+      const data = await fetchUserData(username);
+      setUserData(data);
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
-      <input
-        type="text"
-        aria-label="GitHub username"
-        placeholder="Enter GitHub username"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="flex-grow border rounded px-3 py-2"
-      />
-      <button
-        type="submit"
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        disabled={disabled}
-      >
-        Search
-      </button>
-    </form>
+    <div className="search-container">
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter GitHub username"
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      {loading && <p>Loading...</p>}
+      {error && <p>Looks like we cant find the user</p>}
+      {userData && (
+        <div className="user-info">
+          <img src={userData.avatar_url} alt={userData.login} />
+          <div>
+            <h3>{userData.name || userData.login}</h3>
+            <p>@{userData.login}</p>
+            <a href={userData.html_url} target="_blank" rel="noopener noreferrer">
+              View GitHub Profile
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default SearchBar;
+export default Search;
