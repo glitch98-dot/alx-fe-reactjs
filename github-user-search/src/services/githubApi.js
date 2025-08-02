@@ -1,35 +1,25 @@
 import axios from 'axios';
 
-const GITHUB_API_BASE = 'https://api.github.com';
+const BASE_URL = 'https://api.github.com/users';
 
-const getAuthHeader = () => {
-  const token = import.meta.env.VITE_APP_GITHUB_API_TOKEN;
-  return token ? { Authorization: `token ${token}` } : {};
-};
+export async function fetchUserData(username, token = null) {
+  if (!username || !username.trim()) {
+    throw new Error('Username is required');
+  }
 
-export const searchUsers = async (query) => {
-  const response = await axios.get(
-    `${GITHUB_API_BASE}/search/users`,
-    {
-      params: { q: query },
-      headers: {
-        ...getAuthHeader(),
-        Accept: 'application/vnd.github+json',
-      },
+  const headers = token ? { Authorization: `token ${token}` } : {};
+
+  try {
+    const response = await axios.get(`${BASE_URL}/${encodeURIComponent(username)}`, {
+      headers,
+    });
+    return response.data;
+  } catch (err) {
+    if (err.response && err.response.status === 404) {
+      const e = new Error('Not Found');
+      e.code = 404;
+      throw e;
     }
-  );
-  return response.data;
-};
-
-export const getUser = async (username) => {
-  const response = await axios.get(
-    `${GITHUB_API_BASE}/users/${username}`,
-    {
-      headers: {
-        ...getAuthHeader(),
-        Accept: 'application/vnd.github+json',
-      },
-    }
-  );
-  return response.data;
-};
+    throw err;
+  }
+}
