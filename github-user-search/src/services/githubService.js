@@ -41,3 +41,54 @@ export async function fetchUserData(username) {
     throw new Error('Unexpected error occurred');
   }
 }
+
+export async function searchUsers({ username = '', location = '', minRepos = 0, page = 1, per_page = 30 }) {
+  const terms = [];
+
+  if (username.trim()) {
+    terms.push(`${username.trim()} in:login`);
+  }
+
+  if (location.trim()) {
+    terms.push(`location:${location.trim()}`);
+  }
+
+  if (minRepos && Number(minRepos) > 0) {
+    terms.push(`repos:>=${Number(minRepos)}`);
+  }
+
+  if (terms.length === 0) {
+    throw new Error('At least one search criterion is required');
+  }
+
+  const q = terms.join(' ');
+  const params = {
+    q,
+    page,
+    per_page,
+  };
+
+  try {
+    const { data } = await github.get('/search/users', { params });
+    return {
+      total: data.total_count,
+      items: data.items,
+      incomplete_results: data.incomplete_results,
+    };
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      if (err.response) {
+        const status = err.response.status;
+        if (status === 403 && err.response.headers['x-ratelimit-remaining'] === '0') {
+          throw new Error('Rate limit exceeded');
+        }
+        const message = err.response.data?.message;
+        throw new Error(message || 'GitHub Search API error');
+      }
+      if (err.request) {
+        throw new Error('Network error. Please check your connection.');
+      }
+    }
+    throw new Error('Unexpected error occurred');
+  }
+}
