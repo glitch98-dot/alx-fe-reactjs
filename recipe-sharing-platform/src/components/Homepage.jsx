@@ -16,6 +16,7 @@ function HomePage() {
         🍽 Recipe Sharing Platform
       </h1>
 
+      {/* Responsive grid layout */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {recipes.map((recipe) => (
           <div
