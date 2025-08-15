@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function HomePage() {
@@ -16,7 +17,6 @@ function HomePage() {
         🍽 Recipe Sharing Platform
       </h1>
 
-      {/* Responsive grid layout */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {recipes.map((recipe) => (
           <div
@@ -31,12 +31,12 @@ function HomePage() {
             <div className="p-4">
               <h2 className="text-xl font-semibold">{recipe.title}</h2>
               <p className="text-gray-600 mt-2">{recipe.summary}</p>
-              <a
-                href={`/recipe/${recipe.id}`}
+              <Link
+                to={`/recipe/${recipe.id}`}
                 className="inline-block mt-4 text-blue-500 hover:underline"
               >
                 View Recipe →
-              </a>
+              </Link>
             </div>
           </div>
         ))}
