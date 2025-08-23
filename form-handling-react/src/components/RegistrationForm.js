@@ -1,80 +1,130 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 
-export default function RegistrationForm() {
+const RegistrationForm = () => {
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: ''
   });
-
+  
   const [errors, setErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
-  const validate = () => {
-    let tempErrors = {};
-    if (!formData.username) tempErrors.username = "Username is required";
-    if (!formData.email) tempErrors.email = "Email is required";
-    if (!formData.password) tempErrors.password = "Password is required";
-    return tempErrors;
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    
+    if (!formData.password.trim()) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+    
+    return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted:", formData);
-      alert("Registration successful (Controlled Form)!");
-      setFormData({ username: "", email: "", password: "" });
+    const formErrors = validateForm();
+    
+    if (Object.keys(formErrors).length === 0) {
+      console.log('Registration successful:', formData);
+      setIsSubmitted(true);
+      setFormData({ username: '', email: '', password: '' });
+      setErrors({});
+    } else {
+      setErrors(formErrors);
     }
   };
 
+  if (isSubmitted) {
+    return (
+      <div className="success-message">
+        <h3>Registration Successful!</h3>
+        <p>Your account has been created successfully.</p>
+        <button 
+          onClick={() => setIsSubmitted(false)}
+          className="btn btn-success"
+        >
+          Register Another User
+        </button>
+      </div>
+    );
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-sm mx-auto p-4 border rounded-md shadow">
-      <div>
-        <label className="block font-medium">Username:</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
-      </div>
+    <div className="form-container">
+      <h2>User Registration Form</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className={errors.username ? 'error' : ''}
+          />
+          {errors.username && <span className="error-message">{errors.username}</span>}
+        </div>
 
-      <div>
-        <label className="block font-medium">Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-      </div>
+        <div className="form-group">
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className={errors.email ? 'error' : ''}
+          />
+          {errors.email && <span className="error-message">{errors.email}</span>}
+        </div>
 
-      <div>
-        <label className="block font-medium">Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
-      </div>
+        <div className="form-group">
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className={errors.password ? 'error' : ''}
+          />
+          {errors.password && <span className="error-message">{errors.password}</span>}
+        </div>
 
-      <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-        Register
-      </button>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+      </form>
+    </div>
   );
-}
+};
+
+export default RegistrationForm;
