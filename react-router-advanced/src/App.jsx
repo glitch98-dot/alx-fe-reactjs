@@ -1,14 +1,34 @@
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
 import PostsComponent from "./components/PostsComponent";
+import PostDetails from "./components/PostDetails";
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4 text-center">React Query Demo</h1>
-        <PostsComponent />
-      </div>
+      <BrowserRouter>
+        <Routes>
+        
+          <Route path="/" element={<Layout />}>
+            <Route index element={<PostsComponent />} />
+            <Route path="posts/:id" element={<PostDetails />} />
+
+      
+            <Route
+              path="dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }
