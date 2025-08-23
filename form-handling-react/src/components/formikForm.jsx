@@ -23,7 +23,6 @@ const FormikForm = () => {
 
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     console.log('Formik form submitted:', values);
-    
     setTimeout(() => {
       alert('Registration successful!');
       resetForm();
@@ -49,11 +48,7 @@ const FormikForm = () => {
                 name="username"
                 className="form-input"
               />
-              <ErrorMessage 
-                name="username" 
-                component="span" 
-                className="error-message" 
-              />
+              <ErrorMessage name="username" component="span" className="error-message" />
             </div>
 
             <div className="form-group">
@@ -64,11 +59,7 @@ const FormikForm = () => {
                 name="email"
                 className="form-input"
               />
-              <ErrorMessage 
-                name="email" 
-                component="span" 
-                className="error-message" 
-              />
+              <ErrorMessage name="email" component="span" className="error-message" />
             </div>
 
             <div className="form-group">
@@ -79,11 +70,7 @@ const FormikForm = () => {
                 name="password"
                 className="form-input"
               />
-              <ErrorMessage 
-                name="password" 
-                component="span" 
-                className="error-message" 
-              />
+              <ErrorMessage name="password" component="span" className="error-message" />
             </div>
 
             <button
