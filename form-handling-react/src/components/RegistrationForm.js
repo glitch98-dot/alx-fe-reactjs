@@ -11,10 +11,7 @@ export default function RegistrationForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const validate = () => {
@@ -32,7 +29,7 @@ export default function RegistrationForm() {
 
     if (Object.keys(validationErrors).length === 0) {
       console.log("Form submitted:", formData);
-      alert("Registration successful!");
+      alert("Registration successful (Controlled Form)!");
       setFormData({ username: "", email: "", password: "" });
     }
   };
