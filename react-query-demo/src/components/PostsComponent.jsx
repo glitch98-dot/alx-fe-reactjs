@@ -1,32 +1,35 @@
 // src/components/PostsComponent.jsx
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 const fetchPosts = async () => {
-  const { data } = await axios.get("https://jsonplaceholder.typicode.com/posts");
-  return data;
+  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
 };
 
-function PostsComponent() {
+export default function PostsComponent() {
   const {
-    data: posts,
+    data,
+    error,
     isLoading,
     isError,
-    error,
     refetch,
+    isFetching,
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    staleTime: 1000 * 60, // 1 min cache
-    cacheTime: 1000 * 60 * 5, // 5 min cache before garbage collection
+    refetchOnWindowFocus: true,   // 👈 ensures refetch when window regains focus
+    keepPreviousData: true,       // 👈 keeps old data visible while fetching
   });
 
   if (isLoading) return <p>Loading posts...</p>;
   if (isError) return <p>Error: {error.message}</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h2>Posts</h2>
       <button
         onClick={() => refetch()}
@@ -34,8 +37,9 @@ function PostsComponent() {
       >
         Refetch Posts
       </button>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {posts.slice(0, 10).map((post) => (
+      {isFetching && <p>Refreshing...</p>}
+      <ul>
+        {data.map((post) => (
           <li key={post.id} style={{ marginBottom: "10px" }}>
             <strong>{post.title}</strong>
             <p>{post.body}</p>
@@ -45,5 +49,3 @@ function PostsComponent() {
     </div>
   );
 }
-
-export default PostsComponent;
