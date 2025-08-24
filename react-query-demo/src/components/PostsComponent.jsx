@@ -21,8 +21,10 @@ export default function PostsComponent() {
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
-    refetchOnWindowFocus: true,   // 👈 ensures refetch when window regains focus
-    keepPreviousData: true,       // 👈 keeps old data visible while fetching
+    refetchOnWindowFocus: true, // refetch when window regains focus
+    keepPreviousData: true,     // preserve old data during fetch
+    staleTime: 1000 * 60 * 1,   // 1 minute: data is "fresh"
+    cacheTime: 1000 * 60 * 5,   // 5 minutes: keep data in cache
   });
 
   if (isLoading) return <p>Loading posts...</p>;
