@@ -4,7 +4,9 @@ import Layout from "./components/Layout";
 import PostsComponent from "./components/PostsComponent";
 import PostDetails from "./components/PostDetails";
 import Dashboard from "./components/Dashboard";
+import Profile from "./components/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -12,12 +14,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-        
           <Route path="/" element={<Layout />}>
             <Route index element={<PostsComponent />} />
             <Route path="posts/:id" element={<PostDetails />} />
-
-      
+            <Route path="profile/:username" element={<Profile />} />
             <Route
               path="dashboard"
               element={
